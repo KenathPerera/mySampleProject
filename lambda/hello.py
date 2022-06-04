@@ -57,6 +57,30 @@ def lambda_handler(event, context):
                 'body': json.dumps(body)
             }
 
+        elif event['httpMethod'] == 'PATCH' and event['path'] == '/items':
+
+            req_body = json.loads(event['body'])
+            response = table.update_item(
+                Key = {
+                    'lastname': req_body['lastname']
+                },
+                UpdateExpression="set firstname = :r",
+                ExpressionAttributeValues={
+                ':r': req_body['updateValue'],
+                },
+                ReturnValues="UPDATED_NEW"
+                
+             )
+            body = {
+                'Operation': 'UPDATE',
+                'Message': 'SUCCESS',
+                'UPdatedAttributes': response
+            }
+            return {
+                'statusCode': 200,
+                'body': json.dumps(body)
+            }
+
         elif event['httpMethod'] == 'DELETE' and event['path'] == '/items':
 
             try:

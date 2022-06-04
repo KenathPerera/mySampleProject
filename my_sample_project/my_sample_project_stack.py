@@ -27,6 +27,7 @@ class MySampleProjectStack(Stack):
         items = my_api.root.add_resource("items")
         items.add_method("GET", api_integration)
         items.add_method("POST", api_integration)
+        items.add_method("PATCH", api_integration)
         items.add_method("DELETE", api_integration)
 
         item = my_api.root.add_resource("item")
